@@ -101,7 +101,13 @@ footer{margin-top:2rem;color:var(--muted);font-size:.85rem;display:flex;flex-wra
 .btn.fb{background:#1877f2;color:#fff}
 .close .logo{justify-self:start;width:200px}
 footer{align-items:center}
+.rbar{margin-top:1.2rem;display:flex;gap:10px;flex-wrap:wrap}
+.rbar input{flex:1 1 14rem;min-width:0;font:inherit;font-size:1rem;padding:.8rem 1rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.rcount{margin-top:1rem;font-family:var(--display);font-size:1.2rem;font-weight:800}
+.rcount b{font-size:2.2rem;color:var(--green)}
+.rmap{margin-top:.8rem;height:clamp(300px,55vw,460px);border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 </head>
 <body>
@@ -129,6 +135,16 @@ footer{align-items:center}
       <div class="row"><h3>The Gauntlet Run</h3><p>Say where you are going. Someone then knows when you should arrive, and moves if you do not. That is not surveillance. That is being accounted for.</p></div>
       <div class="row"><h3>Andre and the network</h3><p>A real person, not a call centre. When something goes wrong, the right people are brought in, in the right place, at the right time.</p></div>
     </div>
+  </section>
+
+  <section aria-labelledby="h-radar">
+    <p class="label">The radar</p>
+    <h2 id="h-radar">How many <span style="text-transform:none">eblockwatch</span> members are around you?</h2>
+    <p class="lede">Type a suburb, or tap anywhere on the map. We show how many, never who or exactly where.</p>
+    <form id="rForm" class="rbar" autocomplete="off"><input id="rQ" placeholder="e.g. Bryanston, Durbanville, Hilton" aria-label="Suburb or town"><button class="btn" type="submit">Show me</button></form>
+    <div id="rCount" class="rcount">Tap the map to start.</div>
+    <div id="rMap" class="rmap" role="application" aria-label="Map of eblockwatch members, shown as 2 km squares"></div>
+    <p class="src">Each shaded square is about 2 km wide. Darker means more members. Squares with fewer than 10 members are not shown.</p>
   </section>
 
   <section aria-labelledby="h-lessons">
@@ -184,5 +200,36 @@ footer{align-items:center}
     <span>eblockwatch (Pty) Ltd · 2002/000418/07</span>
   </footer>
 </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  const API="https://dymtsrhhjwtwbkzpdwhz.supabase.co/rest/v1/rpc/public_area", KEY="sb_publishable_5EPYvLIERZ4ZzQ1-R3WU6Q_NDIz_egj";
+  const el=document.getElementById("rMap"), out=document.getElementById("rCount");
+  if(!window.L||!el){ if(out) out.textContent="The map could not load."; return; }
+  const map=L.map(el,{scrollWheelZoom:false}).setView([-28.6,25.5],5);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:16,attribution:"© OpenStreetMap"}).addTo(map);
+  const layer=L.layerGroup().addTo(map); const R=5;
+  async function show(lat,lng,place){
+    out.textContent="Counting…"; layer.clearLayers();
+    const circ=L.circle([lat,lng],{radius:R*1000,color:"#1f7a4a",weight:2,fill:false}).addTo(layer);
+    map.fitBounds(circ.getBounds(),{padding:[12,12]});
+    let d=null; try{ const r=await fetch(API,{method:"POST",headers:{"content-type":"application/json",apikey:KEY,authorization:"Bearer "+KEY},body:JSON.stringify({p_lat:lat,p_lng:lng,p_radius_km:R})}); d=await r.json(); }catch(e){}
+    if(!d||!d.ok){ out.textContent=d&&d.error==="busy"?"Lots of people are looking right now. Try again in a minute.":"That did not work. Try again."; return; }
+    const where=place?" of "+place:"";
+    out.innerHTML=d.n?`<b>${Number(d.n).toLocaleString("en-US")}</b> members within ${d.radius_km} km${where}`:`Fewer than ${d.floor} members within ${d.radius_km} km${where}. Not yet.`;
+    const max=Math.max(10,...d.cells.map(c=>c.n)), h=0.01;
+    d.cells.forEach(c=>L.rectangle([[c.lat-h,c.lng-h],[c.lat+h,c.lng+h]],{stroke:false,fillColor:"#1f7a4a",fillOpacity:.15+.6*Math.sqrt(c.n/max)}).bindTooltip(c.n+" members").addTo(layer));
+  }
+  map.on("click",e=>show(e.latlng.lat,e.latlng.lng,""));
+  document.getElementById("rForm").addEventListener("submit",async ev=>{
+    ev.preventDefault(); const q=document.getElementById("rQ").value.trim(); if(!q) return;
+    out.textContent="Finding "+q+"…";
+    try{ const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=za&q="+encodeURIComponent(q)); const j=await r.json();
+      if(!j.length){ out.textContent="We could not find "+q+". Tap the map instead."; return; }
+      show(parseFloat(j[0].lat),parseFloat(j[0].lon),q);
+    }catch(e){ out.textContent="Search is not working right now. Tap the map instead."; }
+  });
+})();
+</script>
 </body>
 </html>
