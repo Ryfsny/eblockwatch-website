@@ -4,11 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>eblockwatch — One step ahead</title>
-<meta name="description" content="What 25 years of fighting crime on South African roads has taught Andre Snyman, and how eblockwatch takes away the criminal's main weapon: surprise. Join free on WhatsApp.">
+<meta name="description" content="eblockwatch connects you to Andre Snyman's safe zones: more than 65,000 member homes on one map. Join free on WhatsApp.">
 <meta property="og:title" content="eblockwatch — One step ahead">
 <meta property="og:description" content="Crime here runs on surprise. Take that away and they lose. Join free on WhatsApp.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.eblockwatch.co.za/">
+<link rel="icon" href="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png">
+<meta property="og:image" content="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@600;800;900&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
 <style>
@@ -79,71 +81,99 @@ section h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-top:.4rem}
 .close .label{color:var(--amber)}
 .close small{opacity:.75}
 footer{margin-top:2rem;color:var(--muted);font-size:.85rem;display:flex;flex-wrap:wrap;gap:8px 24px}
+
+/* photo, app, membership */
+.byline{display:flex;align-items:center;gap:12px;margin-top:1rem}
+.byline img{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--amber)}
+.byline .by{margin-top:0}
+.btn.alt{background:var(--ink);color:var(--onink)}
+.apps{margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:12px}
+.tiers{margin-top:1.8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:16px}
+.tier{background:var(--surface);border-radius:12px;padding:1.3rem;display:grid;gap:.6rem;align-content:start}
+.tier.key{outline:3px solid var(--amber)}
+.tier h3{font-size:1.3rem;font-weight:800}
+.tier .price{font-family:var(--display);font-size:2rem;font-weight:900;line-height:1}
+.tier .price small{font-size:.95rem;font-weight:600;color:var(--muted)}
+.tier ul{margin:0;padding-left:1.1rem;color:var(--fg)}
+.tier .btn{justify-self:start;font-size:1rem;padding:.7rem 1.1rem}
+.logo{width:clamp(200px,28vw,320px);height:auto;background:#fff;border-radius:16px;padding:12px 16px;box-sizing:border-box}
+@media (max-width:640px){.logo{justify-self:start}}
 </style>
 
 </head>
 <body>
 <div class="wrap">
   <header class="hero">
-    <div class="robot" aria-hidden="true"><div class="lamp r"></div><div class="lamp a"></div><div class="lamp g"></div></div>
+    <img class="logo" src="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png" alt="eblockwatch" width="1024" height="420">
     <div>
       <p class="label">eblockwatch · since 2001</p>
       <h1>One step <span>ahead.</span></h1>
-      <p class="lede">What 25 years of fighting crime on South African roads has taught me, and how we take away the one weapon criminals rely on most: surprise.</p>
-      <p class="by">Andre Snyman, founder of eblockwatch</p>
+      <p class="lede">Safety is not a product. It is a web of relationships, and relationships take time. Over 25 years, more than 95,000 people have registered with me. Each of them has my number, and I have theirs. Behind them stand their community WhatsApp groups and the local security teams they know. When something goes wrong, I do not sound an alarm. I call the right people, because I know them, and they know me.</p>
+      <div class="byline"><img src="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/andre.jpg" alt="Andre Snyman" width="56" height="56"><p class="by">Andre Snyman, founder of eblockwatch</p></div>
       <div class="cta">
-        <a class="btn" href="https://wa.me/13158200999?text=JOIN" target="_blank" rel="noopener">Join free on WhatsApp</a>
+        <a class="btn" href="join" target="_blank" rel="noopener">Join free on WhatsApp</a>
+        <a class="btn alt" href="home">My home</a>
         <small>Send JOIN to +1 315 820 0999</small>
       </div>
     </div>
   </header>
 
-  <section aria-labelledby="h-numbers">
-    <p class="label">South Africa and the rest of the world</p>
-    <h2 id="h-numbers">The numbers we live with</h2>
-    <div class="stats">
-      <div class="stat"><span class="num">72</span><p>people murdered every day in South Africa in 2024. 26,232 in the year.</p></div>
-      <div class="stat"><span class="num">7×</span><p>the world's murder rate. About 42 per 100,000 people here, against roughly 6 worldwide.</p></div>
-      <div class="stat"><span class="num">50</span><p>cars hijacked every day, January to March 2025.</p></div>
+  <section aria-labelledby="h-how">
+    <p class="label">How it works</p>
+    <h2 id="h-how">Start by putting your own house in order</h2>
+    <div class="how">
+      <div class="row"><h3>Your Cyberdome</h3><p>Know yourself before trouble finds you. Who you are, where you live, what you drive, who to call. Every gap is a minute lost when it counts.</p></div>
+      <div class="row"><h3>The BackApp</h3><p>It knows when you leave a safe zone and when you should arrive. You do not have to tell it. Shake your phone and the response starts. Ry hier, ry daar.</p></div>
+      <div class="row"><h3>The Gauntlet Run</h3><p>Say where you are going. Someone then knows when you should arrive, and moves if you do not. That is not surveillance. That is being accounted for.</p></div>
+      <div class="row"><h3>Andre and the network</h3><p>A real person, not a call centre. When something goes wrong, the right people are brought in, in the right place, at the right time.</p></div>
     </div>
-    <p class="src">Sources: SAPS crime statistics, as reported by BusinessTech (2024 murders) and TopAuto (Q4 2024/25 hijackings); world average (6.2 per 100,000) as cited by the Institute for Security Studies.</p>
   </section>
 
   <section aria-labelledby="h-lessons">
     <p class="label">What I have learnt</p>
-    <h2 id="h-lessons">Crime here runs on surprise. Take that away and they lose.</h2>
+    <h2 id="h-lessons">Crime depends on surprise. Remove the surprise and you remove the advantage.</h2>
     <div class="lessons">
-      <div class="lesson key"><h3>Surprise is their weapon</h3><p>An attack at a robot is over in seconds. Awareness before the crime matters more than any button pressed after it.</p><q>Pressing a panic button after an incident is like moaning at the ref after the game.</q></div>
-      <div class="lesson"><h3>The cameras watch. Nobody connects them.</h3><p>We spend billions on cameras, patrols, apps and panic buttons, and still get robbed at the same robots. The missing link is a person who sees it and tells one hub, straight away.</p></div>
-      <div class="lesson"><h3>Intelligence comes from people</h3><p>Every report is a piece of the puzzle. We put the pieces together, then put the boots behind the intelligence. Without your eyes, the response works blind.</p></div>
-      <div class="lesson"><h3>Identity is defence</h3><p>Animals survive in herds. A visible eblockwatch sticker says you are part of something bigger.</p><q>Touch one, you touch all of us.</q></div>
-      <div class="lesson"><h3>Loyalty cannot be bought</h3><p>If you don't respond today when someone asks, tomorrow you won't get backup when you need it. Our network was built over 25 years of time, loyalty and consistency.</p></div>
-      <div class="lesson"><h3>We look after you between safe zones</h3><p>Home, work, school: those are your safe zones. The danger is on the road between them. That is where we watch, and nothing escalates while you are home.</p></div>
-      <div class="lesson"><h3>One general decides</h3><p>Our members are second responders: call your local security and support the member near you. The decisions are made in one place, with the full picture.</p><q>I'm not saving the world. I'm saving my members.</q></div>
+      <div class="lesson key"><h3>Surprise is their weapon</h3><p>An attack at a robot is over in seconds. Whatever happens after that is cleanup. Awareness before the event is worth more than any button pressed after it.</p><q>Pressing a panic button after an incident is like moaning at the ref after the game.</q></div>
+      <div class="lesson"><h3>The cameras watch. Nobody connects them.</h3><p>We have spent billions on cameras, patrols and apps, and people are still robbed at the same robots. The problem is not a shortage of equipment. It is a shortage of connection.</p></div>
+      <div class="lesson"><h3>Intelligence comes from people</h3><p>Every report is a piece of a larger picture. Nobody is obliged to send one. But when someone does, it goes to one place, where it can be put together and acted on.</p></div>
+      <div class="lesson"><h3>Identity is defence</h3><p>People have always been safer together than alone. A visible eblockwatch sticker says you are not alone, and that matters more than it seems.</p><q>Touch one, you touch all of us.</q></div>
+      <div class="lesson"><h3>Loyalty cannot be bought</h3><p>Trust cannot be bought, and it cannot be rushed. Mine was built over 25 years with community groups and local security, one relationship at a time. That trust is what answers when I call.</p></div>
+      <div class="lesson"><h3>We look after you between safe zones</h3><p>Home, work, school. Those are your safe zones. The risk lives on the road between them. That is where we watch, and nothing escalates while you are home.</p></div>
+      <div class="lesson"><h3>One general decides</h3><p>You are not expected to act. Your strength is your connection: your community group and the local security who know you. Decisions are made in one place, by someone who sees the whole picture. Too many voices in a crisis produce chaos.</p><q>I'm not saving the world. I'm saving my members.</q></div>
     </div>
   </section>
 
-  <section aria-labelledby="h-how">
-    <p class="label">How we stay one step ahead</p>
-    <h2 id="h-how">Built around you, not around the alarm</h2>
-    <div class="how">
-      <div class="row"><h3>Your Cyberdome</h3><p>Who you are, where you live, your car, your emergency contact. The more complete it is, the faster we move when you need us.</p></div>
-      <div class="row"><h3>The BackApp</h3><p>Your radar. It knows when you leave a safe zone and when you should arrive. Shake your phone and it sets off a coordinated response. Ry hier, ry daar.</p></div>
-      <div class="row"><h3>The Gauntlet Run</h3><p>Tell us where you are going. Someone knows when you should arrive, and moves if you don't.</p></div>
-      <div class="row"><h3>Andre and the network</h3><p>A real person, not a call centre. When something goes wrong, we connect the right people, in the right place, at the right time.</p></div>
+  <section aria-labelledby="h-app">
+    <p class="label">The BackApp</p>
+    <h2 id="h-app">Your radar between safe zones</h2>
+    <p class="lede">It does one job, and does it properly: it knows when you leave a safe zone and when you should arrive. Shake your phone and the response starts. Free for every member.</p>
+    <div class="apps">
+      <a class="btn" href="https://testflight.apple.com/join/fdsAFAEb" target="_blank" rel="noopener">Get it on iPhone</a>
+      <a class="btn alt" href="backapp" target="_blank" rel="noopener">Get it on Android</a>
+    </div>
+    <p class="src">iPhone installs through Apple TestFlight. Android: we send your download link on WhatsApp.</p>
+  </section>
+
+  <section aria-labelledby="h-member">
+    <p class="label">Membership</p>
+    <h2 id="h-member">Start where you are. Take on more when you are ready.</h2>
+    <div class="tiers">
+      <div class="tier"><h3>Entry Level</h3><p class="price">Free</p><ul><li>Andre has your number, you have his</li><li>Your Cyberdome and home pin</li><li>The BackApp</li></ul><a class="btn" href="join" target="_blank" rel="noopener">Join free</a></div>
+      <div class="tier key"><h3>Single Membership</h3><p class="price">R150 <small>a month</small></p><ul><li>Everything in Entry Level</li><li>Live oversight of your trips</li><li>Immediate intervention when something goes wrong</li></ul><a class="btn" href="https://paystack.shop/pay/cyber-chaperone" target="_blank" rel="noopener">Confirm your membership</a></div>
+      <div class="tier"><h3>Family Membership</h3><p class="price">R250 <small>a month</small></p><ul><li>Single Membership for your household</li><li>Your family linked in one circle</li><li>One relationship, everyone covered</li></ul><a class="btn" href="https://wa.me/13158200999?text=Family%20Membership" target="_blank" rel="noopener">Ask about Family</a></div>
     </div>
   </section>
 
   <div class="close">
     <p class="label">Join the spine of eblockwatch</p>
-    <h2>Be the eyes. We bring the response.</h2>
-    <p>Joining is free. Send JOIN on WhatsApp, answer a few questions and drop your home pin. Each member makes the spine of eblockwatch stronger.</p>
-    <div class="cta"><a class="btn" href="https://wa.me/13158200999?text=JOIN" target="_blank" rel="noopener">Join free on WhatsApp</a><small>+1 315 820 0999</small></div>
+    <h2>Stay connected. We bring the response.</h2>
+    <p>Joining is free and takes a few minutes. Send JOIN on WhatsApp, answer a few questions and drop your home pin. That small act of order makes you safer, and it makes the network stronger for everyone in it.</p>
+    <div class="cta"><a class="btn" href="join" target="_blank" rel="noopener">Join free on WhatsApp</a><small>+1 315 820 0999</small></div>
   </div>
 
   <footer>
-    <a href="/home">My home page</a>
-    <a href="https://paystack.shop/pay/cyber-chaperone" target="_blank" rel="noopener">Become a member</a>
+    <a href="home">My home page</a>
+    <a href="https://dymtsrhhjwtwbkzpdwhz.supabase.co/functions/v1/privacy" target="_blank" rel="noopener">Privacy</a>
     <a href="https://www.facebook.com/eblockwatchnational" target="_blank" rel="noopener">Facebook</a>
     <a href="https://ebwatch.co.za/terms-conditions/" target="_blank" rel="noopener">Terms</a>
     <span>eBlockwatch (Pty) Ltd · 2002/000418/07</span>
