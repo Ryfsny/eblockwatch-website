@@ -106,6 +106,8 @@ footer{align-items:center}
 .rcount{margin-top:1rem;font-family:var(--display);font-size:1.2rem;font-weight:800}
 .rcount b{font-size:2.2rem;color:var(--green)}
 .rmap{margin-top:.8rem;height:clamp(300px,55vw,460px);border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.vid{margin-top:1.2rem;position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
@@ -145,6 +147,13 @@ footer{align-items:center}
     <div id="rCount" class="rcount">Tap the map to start.</div>
     <div id="rMap" class="rmap" role="application" aria-label="Map of eblockwatch members, shown as 2 km squares"></div>
     <p class="src">Each shaded square is about 2 km wide. Darker means more members. Squares with fewer than 10 members are not shown.</p>
+  </section>
+
+  <section aria-labelledby="h-video">
+    <p class="label">From Andre</p>
+    <h2 id="h-video">Real police officers do not mind being recorded</h2>
+    <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/RbpNi7g1re8" title="Real police officers do not mind being recorded — Andre Snyman" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+    <p class="src"><a href="https://youtu.be/RbpNi7g1re8" target="_blank" rel="noopener">Watch on YouTube</a></p>
   </section>
 
   <section aria-labelledby="h-lessons">
