@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eblockwatch — One step ahead</title>
+<meta name="description" content="What 25 years of fighting crime on South African roads has taught Andre Snyman, and how eblockwatch takes away the criminal's main weapon: surprise. Join free on WhatsApp.">
+<meta property="og:title" content="eblockwatch — One step ahead">
+<meta property="og:description" content="Crime here runs on surprise. Take that away and they lose. Join free on WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.eblockwatch.co.za/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@600;800;900&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+<style>
+/* Layout: a single road-like column; the SA "robot" (traffic light) is the page's device — red = the attack, amber = the warning, green = home safe. */
+:root{
+  --bg:#f3f1ec; --surface:#e7e4dc; --fg:#1d232b; --muted:#5a6370; --line:#cfcac0;
+  --red:#c8361f; --amber:#d98a00; --green:#1f7a4a; --ink:#0f1a2a; --onink:#f3f1ec;
+  --display:"Overpass","Arial Narrow",Arial,sans-serif;
+  --body:"Literata",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171d; --surface:#1b222b; --fg:#ece8df; --muted:#9aa4b0; --line:#2c3540;
+  --red:#ef5a40; --amber:#f2a516; --green:#3fb57a; --ink:#0a0f15; --onink:#ece8df; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12171d; --surface:#1b222b; --fg:#ece8df; --muted:#9aa4b0; --line:#2c3540;
+  --red:#ef5a40; --amber:#f2a516; --green:#3fb57a; --ink:#0a0f15; --onink:#ece8df; color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:1.0625rem;line-height:1.65}
+.wrap{max-width:68rem;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:0 3rem}
+h1,h2,h3,.label,.btn,.num{font-family:var(--display)}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.05}
+p{margin:0}
+.label{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+a{color:inherit}
+
+/* hero */
+.hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:center;padding-block:clamp(40px,7vw,88px) clamp(32px,5vw,56px);border-bottom:1px solid var(--line)}
+.robot{background:var(--ink);border-radius:22px;padding:16px 14px;display:grid;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.lamp{width:clamp(44px,7vw,68px);aspect-ratio:1;border-radius:50%;background:#2a323c;opacity:.35}
+.lamp.r{background:var(--red)} .lamp.a{background:var(--amber);opacity:1;box-shadow:0 0 28px var(--amber)} .lamp.g{background:var(--green)}
+@media (prefers-reduced-motion:no-preference){.lamp.a{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{box-shadow:0 0 6px var(--amber);opacity:.75}}}
+.hero h1{font-size:clamp(2.6rem,7.5vw,5.6rem);font-weight:900;letter-spacing:-.02em}
+.hero h1 span{color:var(--amber)}
+.lede{margin-top:1rem;max-width:40rem;font-size:clamp(1.05rem,2vw,1.25rem);color:var(--fg)}
+.by{margin-top:.9rem;color:var(--muted);font-size:.95rem}
+.cta{margin-top:1.6rem;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:#fff;text-decoration:none;font-weight:800;font-size:1.1rem;padding:.85rem 1.4rem;border-radius:10px}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.cta small{color:var(--muted);font-family:var(--display);font-weight:600}
+
+/* numbers */
+section{padding-block:clamp(36px,6vw,64px);border-bottom:1px solid var(--line)}
+section h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-top:.4rem}
+.stats{margin-top:1.8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:16px}
+.stat{background:var(--surface);border-radius:12px;padding:1.2rem 1.3rem;display:grid;gap:.35rem;align-content:start}
+.num{font-size:clamp(2.2rem,5vw,3rem);font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.stat:nth-child(1) .num{color:var(--red)} .stat:nth-child(2) .num{color:var(--fg)} .stat:nth-child(3) .num{color:var(--amber)}
+.stat p{color:var(--muted);font-size:.95rem}
+.src{margin-top:1rem;font-size:.82rem;color:var(--muted);max-width:52rem}
+
+/* lessons */
+.lessons{margin-top:2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:28px 40px}
+.lesson{display:grid;gap:.5rem;padding-top:1rem;border-top:3px solid var(--line);min-width:0}
+.lesson.key{border-top-color:var(--amber)}
+.lesson h3{font-size:1.35rem;font-weight:800}
+.lesson p{color:var(--fg)}
+.lesson q{display:block;font-style:italic;color:var(--muted);quotes:"“" "”"}
+
+/* how */
+.how{margin-top:2rem;display:grid;gap:0}
+.row{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:20px;padding-block:1.1rem;border-top:1px solid var(--line)}
+.row h3{font-size:1.15rem;font-weight:800}
+@media (max-width:640px){.hero{grid-template-columns:1fr}.robot{grid-auto-flow:column;justify-self:start;padding:12px 14px}.row{grid-template-columns:1fr;gap:6px}}
+
+/* closing */
+.close{background:var(--ink);color:var(--onink);border-radius:18px;margin-top:clamp(36px,6vw,64px);padding:clamp(24px,5vw,48px);display:grid;gap:1rem}
+.close h2{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900}
+.close p{max-width:42rem;opacity:.9}
+.close .label{color:var(--amber)}
+.close small{opacity:.75}
+footer{margin-top:2rem;color:var(--muted);font-size:.85rem;display:flex;flex-wrap:wrap;gap:8px 24px}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="robot" aria-hidden="true"><div class="lamp r"></div><div class="lamp a"></div><div class="lamp g"></div></div>
+    <div>
+      <p class="label">eblockwatch · since 2001</p>
+      <h1>One step <span>ahead.</span></h1>
+      <p class="lede">What 25 years of fighting crime on South African roads has taught me, and how we take away the one weapon criminals rely on most: surprise.</p>
+      <p class="by">Andre Snyman, founder of eblockwatch</p>
+      <div class="cta">
+        <a class="btn" href="https://wa.me/13158200999?text=JOIN" target="_blank" rel="noopener">Join free on WhatsApp</a>
+        <small>Send JOIN to +1 315 820 0999</small>
+      </div>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-numbers">
+    <p class="label">South Africa and the rest of the world</p>
+    <h2 id="h-numbers">The numbers we live with</h2>
+    <div class="stats">
+      <div class="stat"><span class="num">72</span><p>people murdered every day in South Africa in 2024. 26,232 in the year.</p></div>
+      <div class="stat"><span class="num">7×</span><p>the world's murder rate. About 42 per 100,000 people here, against roughly 6 worldwide.</p></div>
+      <div class="stat"><span class="num">50</span><p>cars hijacked every day, January to March 2025.</p></div>
+    </div>
+    <p class="src">Sources: SAPS crime statistics, as reported by BusinessTech (2024 murders) and TopAuto (Q4 2024/25 hijackings); world average (6.2 per 100,000) as cited by the Institute for Security Studies.</p>
+  </section>
+
+  <section aria-labelledby="h-lessons">
+    <p class="label">What I have learnt</p>
+    <h2 id="h-lessons">Crime here runs on surprise. Take that away and they lose.</h2>
+    <div class="lessons">
+      <div class="lesson key"><h3>Surprise is their weapon</h3><p>An attack at a robot is over in seconds. Awareness before the crime matters more than any button pressed after it.</p><q>Pressing a panic button after an incident is like moaning at the ref after the game.</q></div>
+      <div class="lesson"><h3>The cameras watch. Nobody connects them.</h3><p>We spend billions on cameras, patrols, apps and panic buttons, and still get robbed at the same robots. The missing link is a person who sees it and tells one hub, straight away.</p></div>
+      <div class="lesson"><h3>Intelligence comes from people</h3><p>Every report is a piece of the puzzle. We put the pieces together, then put the boots behind the intelligence. Without your eyes, the response works blind.</p></div>
+      <div class="lesson"><h3>Identity is defence</h3><p>Animals survive in herds. A visible eblockwatch sticker says you are part of something bigger.</p><q>Touch one, you touch all of us.</q></div>
+      <div class="lesson"><h3>Loyalty cannot be bought</h3><p>If you don't respond today when someone asks, tomorrow you won't get backup when you need it. Our network was built over 25 years of time, loyalty and consistency.</p></div>
+      <div class="lesson"><h3>We look after you between safe zones</h3><p>Home, work, school: those are your safe zones. The danger is on the road between them. That is where we watch, and nothing escalates while you are home.</p></div>
+      <div class="lesson"><h3>One general decides</h3><p>Our members are second responders: call your local security and support the member near you. The decisions are made in one place, with the full picture.</p><q>I'm not saving the world. I'm saving my members.</q></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-how">
+    <p class="label">How we stay one step ahead</p>
+    <h2 id="h-how">Built around you, not around the alarm</h2>
+    <div class="how">
+      <div class="row"><h3>Your Cyberdome</h3><p>Who you are, where you live, your car, your emergency contact. The more complete it is, the faster we move when you need us.</p></div>
+      <div class="row"><h3>The BackApp</h3><p>Your radar. It knows when you leave a safe zone and when you should arrive. Shake your phone and it sets off a coordinated response. Ry hier, ry daar.</p></div>
+      <div class="row"><h3>The Gauntlet Run</h3><p>Tell us where you are going. Someone knows when you should arrive, and moves if you don't.</p></div>
+      <div class="row"><h3>Andre and the network</h3><p>A real person, not a call centre. When something goes wrong, we connect the right people, in the right place, at the right time.</p></div>
+    </div>
+  </section>
+
+  <div class="close">
+    <p class="label">Join the spine of eblockwatch</p>
+    <h2>Be the eyes. We bring the response.</h2>
+    <p>Joining is free. Send JOIN on WhatsApp, answer a few questions and drop your home pin. Each member makes the spine of eblockwatch stronger.</p>
+    <div class="cta"><a class="btn" href="https://wa.me/13158200999?text=JOIN" target="_blank" rel="noopener">Join free on WhatsApp</a><small>+1 315 820 0999</small></div>
+  </div>
+
+  <footer>
+    <a href="/home">My home page</a>
+    <a href="https://paystack.shop/pay/cyber-chaperone" target="_blank" rel="noopener">Become a member</a>
+    <a href="https://www.facebook.com/eblockwatchnational" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://ebwatch.co.za/terms-conditions/" target="_blank" rel="noopener">Terms</a>
+    <span>eBlockwatch (Pty) Ltd · 2002/000418/07</span>
+  </footer>
+</div>
+</body>
+</html>
