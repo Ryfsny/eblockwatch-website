@@ -1,1 +1,113 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>eblockwatch</title><meta http-equiv="refresh" content="0;url=https://wa.me/13158200999?text=JOIN"><link rel="canonical" href="https://wa.me/13158200999?text=JOIN"><script>location.replace("https://wa.me/13158200999?text=JOIN")</script></head><body><p><a href="https://wa.me/13158200999?text=JOIN">Continue</a></p></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eblockwatch — Who lives near you?</title>
+<meta name="description" content="See how many eblockwatch members live in your area. Andre Snyman looks after his members like family.">
+<meta property="og:title" content="How many eblockwatch members live near you?">
+<meta property="og:description" content="This is only part of my members. You might be on it already. Check it out and tell me. — Andre Snyman">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png">
+<link rel="icon" href="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@600;800;900&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+/* 7 Oct 2026: landing page for the channel/Facebook link. Count first, then join. */
+:root{--bg:#f3f1ec;--surface:#e7e4dc;--fg:#1d232b;--muted:#5a6370;--line:#cfcac0;--green:#1f7a4a;--ink:#0f1a2a;--onink:#f3f1ec;
+  --display:"Overpass","Arial Narrow",Arial,sans-serif;--body:"Literata",Georgia,serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12171d;--surface:#1b222b;--fg:#ece8df;--muted:#9aa4b0;--line:#2c3540;--green:#3fb57a;--ink:#0a0f15;--onink:#ece8df;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12171d;--surface:#1b222b;--fg:#ece8df;--muted:#9aa4b0;--line:#2c3540;--green:#3fb57a;--ink:#0a0f15;--onink:#ece8df;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:1.0625rem;line-height:1.6}
+.wrap{max-width:40rem;margin:0 auto;padding:24px 16px 48px}
+h1,.btn,.num,.label{font-family:var(--display)}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.top img{width:44px;height:44px;border-radius:10px}
+.top b{font-family:var(--display);font-size:1.15rem}
+h1{font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.05;margin:0 0 12px;text-wrap:balance}
+.from{border-left:4px solid var(--green);padding:4px 0 4px 14px;margin:0 0 20px}
+.from small{display:block;color:var(--muted);font-family:var(--display);font-weight:800;margin-top:6px}
+.btn{display:block;width:100%;box-sizing:border-box;text-align:center;font-weight:800;font-size:1.05rem;padding:15px 16px;border-radius:12px;border:0;cursor:pointer;text-decoration:none;background:var(--ink);color:var(--onink)}
+.btn.green{background:var(--green);color:#fff}
+.btn.ghost{background:transparent;color:var(--fg);border:2px solid var(--line)}
+.row{display:flex;gap:8px;margin:10px 0}
+.row input{flex:1;min-width:0;font:inherit;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--fg)}
+.row .btn{width:auto;padding:12px 18px}
+.count{font-family:var(--display);font-size:1.25rem;margin:16px 0 10px;min-height:1.6em}
+.count b{font-size:2.4rem;color:var(--green);display:block;line-height:1}
+#map{height:320px;border-radius:12px;border:1px solid var(--line);margin-bottom:8px}
+.src{color:var(--muted);font-size:.85rem}
+#next{display:none;margin-top:22px;gap:10px}
+#next.on{display:grid}
+.foot{color:var(--muted);font-size:.85rem;margin-top:32px;text-align:center}
+.foot a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><img src="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png" alt=""><b>eblockwatch</b></div>
+
+  <h1>How many eblockwatch members live near you?</h1>
+  <div class="from">This is only part of my members. You might be on it already. Check it out and tell me.<br>I look after my members like family.<small>Andre Snyman</small></div>
+
+  <button class="btn green" id="here" type="button">📍 Show members near me</button>
+  <form class="row" id="f" autocomplete="off"><input id="q" placeholder="Or type your suburb" aria-label="Suburb or town"><button class="btn" type="submit">Show</button></form>
+
+  <div class="count" id="out" aria-live="polite"></div>
+  <div id="map" role="application" aria-label="Map of eblockwatch members, shown as 2 km squares"></div>
+  <p class="src">We show how many, never who or exactly where. Squares under 10 members are hidden.</p>
+
+  <div id="next">
+    <a class="btn green" id="join" href="https://wa.me/13158200999?text=JOIN">Join them — free, on WhatsApp</a>
+    <a class="btn ghost" id="tell" href="https://wa.me/13158200999?text=JOIN">Tell Andre what you found</a>
+    <a class="btn ghost" href="https://ryfsny.github.io/eblockwatch-control-room/member.html">Already a member? Open your page</a>
+  </div>
+
+  <p class="foot">Send JOIN to +1 315 820 0999 on WhatsApp. Andre gets your number, you get his.<br><a href="./">More about eblockwatch</a></p>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  const API="https://dymtsrhhjwtwbkzpdwhz.supabase.co/rest/v1/rpc/public_area", KEY="sb_publishable_5EPYvLIERZ4ZzQ1-R3WU6Q_NDIz_egj";
+  const WA="https://wa.me/13158200999?text=";
+  const out=document.getElementById("out"), next=document.getElementById("next"), R=5;
+  let map=null, layer=null;
+  if(window.L){
+    map=L.map("map",{scrollWheelZoom:false}).setView([-28.6,25.5],5);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:16,attribution:"© OpenStreetMap"}).addTo(map);
+    layer=L.layerGroup().addTo(map);
+    map.on("click",e=>show(e.latlng.lat,e.latlng.lng,""));
+  }
+  async function show(lat,lng,place){
+    out.textContent="Counting…";
+    if(layer){ layer.clearLayers(); const c=L.circle([lat,lng],{radius:R*1000,color:"#1f7a4a",weight:2,fill:false}).addTo(layer); map.fitBounds(c.getBounds(),{padding:[12,12]}); }
+    let d=null; try{ const r=await fetch(API,{method:"POST",headers:{"content-type":"application/json",apikey:KEY,authorization:"Bearer "+KEY},body:JSON.stringify({p_lat:lat,p_lng:lng,p_radius_km:R})}); d=await r.json(); }catch(e){}
+    if(!d||!d.ok){ out.textContent=d&&d.error==="busy"?"Lots of people are looking right now. Try again in a minute.":"That did not work. Try again."; return; }
+    const where=place?" of "+place:" of you";
+    let said;
+    if(d.n){ out.innerHTML=`<b>${Number(d.n).toLocaleString("en-ZA")}</b>eblockwatch members within ${d.radius_km} km${where}`; said=`${Number(d.n).toLocaleString("en-ZA")} members within ${d.radius_km} km${place?" of "+place:""}`; }
+    else { out.textContent=`Fewer than ${d.floor} members within ${d.radius_km} km${where}. Be one of the first.`; said=`fewer than ${d.floor} members near ${place||"me"}`; }
+    if(layer){ const max=Math.max(10,...d.cells.map(c=>c.n)), h=0.01;
+      d.cells.forEach(c=>L.rectangle([[c.lat-h,c.lng-h],[c.lat+h,c.lng+h]],{stroke:false,fillColor:"#1f7a4a",fillOpacity:.15+.6*Math.sqrt(c.n/max)}).bindTooltip(c.n+" members").addTo(layer)); }
+    document.getElementById("tell").href=WA+encodeURIComponent(`JOIN — I checked: ${said}.`);
+    next.classList.add("on");
+  }
+  document.getElementById("here").addEventListener("click",()=>{
+    if(!navigator.geolocation){ out.textContent="Your phone did not share a location. Type your suburb instead."; return; }
+    out.textContent="Finding you…";
+    navigator.geolocation.getCurrentPosition(p=>show(p.coords.latitude,p.coords.longitude,""),
+      ()=>{ out.textContent="Location is off. Type your suburb instead."; document.getElementById("q").focus(); },
+      {enableHighAccuracy:false,timeout:10000,maximumAge:600000});
+  });
+  document.getElementById("f").addEventListener("submit",async ev=>{
+    ev.preventDefault(); const q=document.getElementById("q").value.trim(); if(!q) return;
+    out.textContent="Finding "+q+"…";
+    try{ const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=za&q="+encodeURIComponent(q)); const j=await r.json();
+      if(!j.length){ out.textContent="We could not find "+q+". Tap the map instead."; return; }
+      show(parseFloat(j[0].lat),parseFloat(j[0].lon),q);
+    }catch(e){ out.textContent="Search is not working right now. Tap the map instead."; }
+  });
+})();
+</script>
+</body>
+</html>
