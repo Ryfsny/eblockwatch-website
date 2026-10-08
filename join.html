@@ -37,6 +37,7 @@ h1{font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.05;margin:0 0 12px;text-wrap
 .count b{font-size:2.4rem;color:var(--green);display:block;line-height:1}
 #map{height:320px;border-radius:12px;border:1px solid var(--line);margin-bottom:8px}
 .src{color:var(--muted);font-size:.85rem}
+.homebox{display:none;margin-top:20px;padding:16px;border:2px solid var(--green);border-radius:12px}.homebox.on{display:grid;gap:10px}.homebox p{margin:0}
 #next{display:none;margin-top:22px;gap:10px}
 #next.on{display:grid}
 .foot{color:var(--muted);font-size:.85rem;margin-top:32px;text-align:center}
@@ -56,6 +57,13 @@ h1{font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.05;margin:0 0 12px;text-wrap
   <div class="count" id="out" aria-live="polite"></div>
   <div id="map" role="application" aria-label="Map of eblockwatch members, shown as 2 km squares"></div>
   <p class="src">We show how many, never who or exactly where. Squares under 10 members are hidden.</p>
+
+  <div id="home" class="homebox">
+    <b>Are you at home now?</b>
+    <p>Make this your Safe Zone. Andre then knows where home is, and when you leave it, that is when we look after you.</p>
+    <a class="btn green" id="homeBtn" href="#">🏠 Yes — make this my Safe Zone</a>
+    <p class="src">Your Safe Zone stays between you and Andre. He takes personal responsibility for it.</p>
+  </div>
 
   <div id="next">
     <a class="btn green" id="join" href="https://wa.me/13158200999?text=JOIN">Join them — free, on WhatsApp</a>
@@ -78,7 +86,7 @@ h1{font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.05;margin:0 0 12px;text-wrap
     layer=L.layerGroup().addTo(map);
     map.on("click",e=>show(e.latlng.lat,e.latlng.lng,""));
   }
-  async function show(lat,lng,place){
+  async function show(lat,lng,place,gps){
     out.textContent="Counting…";
     if(layer){ layer.clearLayers(); const c=L.circle([lat,lng],{radius:R*1000,color:"#1f7a4a",weight:2,fill:false}).addTo(layer); map.fitBounds(c.getBounds(),{padding:[12,12]}); }
     let d=null; try{ const r=await fetch(API,{method:"POST",headers:{"content-type":"application/json",apikey:KEY,authorization:"Bearer "+KEY},body:JSON.stringify({p_lat:lat,p_lng:lng,p_radius_km:R})}); d=await r.json(); }catch(e){}
@@ -91,11 +99,14 @@ h1{font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.05;margin:0 0 12px;text-wrap
       d.cells.forEach(c=>L.rectangle([[c.lat-h,c.lng-h],[c.lat+h,c.lng+h]],{stroke:false,fillColor:"#1f7a4a",fillOpacity:.15+.6*Math.sqrt(c.n/max)}).bindTooltip(c.n+" members").addTo(layer)); }
     document.getElementById("tell").href=WA+encodeURIComponent(`JOIN — I checked: ${said}.`);
     next.classList.add("on");
+    const hb=document.getElementById("home");
+    if(gps){ document.getElementById("homeBtn").href=WA+encodeURIComponent(`JOIN — make this my home Safe Zone: ${lat.toFixed(5)},${lng.toFixed(5)}`); hb.classList.add("on"); }
+    else hb.classList.remove("on");
   }
   document.getElementById("here").addEventListener("click",()=>{
     if(!navigator.geolocation){ out.textContent="Your phone did not share a location. Type your suburb instead."; return; }
     out.textContent="Finding you…";
-    navigator.geolocation.getCurrentPosition(p=>show(p.coords.latitude,p.coords.longitude,""),
+    navigator.geolocation.getCurrentPosition(p=>show(p.coords.latitude,p.coords.longitude,"",true),
       ()=>{ out.textContent="Location is off. Type your suburb instead."; document.getElementById("q").focus(); },
       {enableHighAccuracy:false,timeout:10000,maximumAge:600000});
   });
