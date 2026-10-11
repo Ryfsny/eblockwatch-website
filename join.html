@@ -2,122 +2,347 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>eblockwatch — Who lives near you?</title>
-<meta name="description" content="See how many eblockwatch members live in your area. Andre Snyman looks after his members like family.">
-<meta property="og:title" content="How many eblockwatch members live near you?">
-<meta property="og:description" content="This is only part of my members. You might be on it already. Check it out and tell me. — Andre Snyman">
-<meta property="og:type" content="website">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>eblockwatch — When you can't panic, we panic for you</title>
+<meta name="description" content="95,000 South Africans have Andre Snyman's number. Since 2001. See who's near you and join free.">
+<meta property="og:title" content="95,000 South Africans have my number. — Andre Snyman">
+<meta property="og:description" content="eblockwatch, since 2001. When something goes wrong, I don't sound an alarm. I call the right people. See who's near you.">
 <meta property="og:image" content="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png">
+<meta name="theme-color" content="#070c12">
 <link rel="icon" href="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@600;800;900&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-/* 7 Oct 2026: landing page for the channel/Facebook link. Count first, then join. */
-:root{--bg:#f3f1ec;--surface:#e7e4dc;--fg:#1d232b;--muted:#5a6370;--line:#cfcac0;--green:#1f7a4a;--ink:#0f1a2a;--onink:#f3f1ec;
-  --display:"Overpass","Arial Narrow",Arial,sans-serif;--body:"Literata",Georgia,serif}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#12171d;--surface:#1b222b;--fg:#ece8df;--muted:#9aa4b0;--line:#2c3540;--green:#3fb57a;--ink:#0a0f15;--onink:#ece8df;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#12171d;--surface:#1b222b;--fg:#ece8df;--muted:#9aa4b0;--line:#2c3540;--green:#3fb57a;--ink:#0a0f15;--onink:#ece8df;color-scheme:dark}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:1.0625rem;line-height:1.6}
-.wrap{max-width:40rem;margin:0 auto;padding:24px 16px 48px}
-h1,.btn,.num,.label{font-family:var(--display)}
-.top{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.top img{width:44px;height:44px;border-radius:10px}
-.top b{font-family:var(--display);font-size:1.15rem}
-h1{font-size:clamp(1.9rem,7vw,2.6rem);line-height:1.05;margin:0 0 12px;text-wrap:balance}
-.from{border-left:4px solid var(--green);padding:4px 0 4px 14px;margin:0 0 20px}
-.from small{display:block;color:var(--muted);font-family:var(--display);font-weight:800;margin-top:6px}
-.btn{display:block;width:100%;box-sizing:border-box;text-align:center;font-weight:800;font-size:1.05rem;padding:15px 16px;border-radius:12px;border:0;cursor:pointer;text-decoration:none;background:var(--ink);color:var(--onink)}
-.btn.green{background:var(--green);color:#fff}
-.btn.ghost{background:transparent;color:var(--fg);border:2px solid var(--line)}
-.row{display:flex;gap:8px;margin:10px 0}
-.row input{flex:1;min-width:0;font:inherit;padding:12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--fg)}
-.row .btn{width:auto;padding:12px 18px}
-.count{font-family:var(--display);font-size:1.25rem;margin:16px 0 10px;min-height:1.6em}
-.count b{font-size:2.4rem;color:var(--green);display:block;line-height:1}
-#map{height:320px;border-radius:12px;border:1px solid var(--line);margin-bottom:8px}
-.src{color:var(--muted);font-size:.85rem}
-.homebox{display:none;margin-top:20px;padding:16px;border:2px solid var(--green);border-radius:12px}.homebox.on{display:grid;gap:10px}.homebox p{margin:0}
-#next{display:none;margin-top:22px;gap:10px}
-#next.on{display:grid}
-.foot{color:var(--muted);font-size:.85rem;margin-top:32px;text-align:center}
-.foot a{color:inherit}
+/* 11 Oct 2026 (macgiver) — Andre: "Be a peacock." Real facts only. Consent from the member's own phone (JOIN <code>). */
+:root{--bg:#070c12;--bg2:#0c141d;--panel:#111b26;--line:#22344a;--fg:#f2f4f6;--muted:#a3b2c2;
+  --green:#3fd17f;--gold:#f6c445;--red:#e8483c;--blue:#2f7fe0;--orange:#f08a24;
+  --rainbow:linear-gradient(90deg,#e8483c,#f08a24,#f6c445,#3fd17f,#2f7fe0);
+  --display:"Overpass","Arial Narrow",Arial,sans-serif;--body:"Literata",Georgia,serif;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:1.06rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:68rem;margin:0 auto;padding:0 16px}
+.d{font-family:var(--display)}
+/* top bar */
+.bar{position:sticky;top:0;z-index:1000;background:rgba(7,12,18,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+.bar .wrap{display:flex;align-items:center;gap:10px;height:60px}
+.bar img{width:36px;height:36px;border-radius:8px;background:#fff}
+.bar b{font-family:var(--display);font-size:1.08rem}
+.bar .sp{flex:1}
+.bar a.mem{font-family:var(--display);font-size:.9rem;color:var(--muted);text-decoration:none;margin-right:6px}
+.pill{font-family:var(--display);font-weight:800;text-decoration:none;background:var(--green);color:#04210f;padding:9px 14px;border-radius:999px;font-size:.95rem;white-space:nowrap}
+.rainbow{height:3px;background:var(--rainbow)}
+/* hero */
+.hero{position:relative;min-height:calc(100svh - 63px);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+#bgmap{position:absolute;inset:0;z-index:-2;background:#070c12}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(7,12,18,.55) 0%,rgba(7,12,18,.2) 35%,rgba(7,12,18,.85) 70%,#070c12 100%)}
+.hero .wrap{padding-bottom:28px;padding-top:28vh;width:100%}
+.kick{font-family:var(--display);font-weight:800;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+.hero h1{font-family:var(--display);font-weight:900;font-size:clamp(2.4rem,9.5vw,5.2rem);line-height:.98;margin:0 0 14px;letter-spacing:-.01em;text-wrap:balance}
+.hero h1 em{font-style:normal;background:var(--rainbow);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.sub{font-size:clamp(1.05rem,3.6vw,1.3rem);color:#d6dee6;max-width:38rem;margin:0 0 20px}
+.hero p.sub b{color:#fff}
+.ctas{display:grid;gap:10px;max-width:30rem}
+.btn{display:block;width:100%;text-align:center;font-family:var(--display);font-weight:900;font-size:1.08rem;padding:16px;border-radius:14px;border:0;cursor:pointer;text-decoration:none;background:var(--green);color:#04210f;box-shadow:0 10px 30px -10px rgba(63,209,127,.6)}
+.btn.ghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid rgba(255,255,255,.18);box-shadow:none}
+.btn.wa{background:#25d366;color:#04210f}
+.btn:active{transform:translateY(1px)}
+.live{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-size:.78rem;font-weight:800;letter-spacing:.1em;color:#fff;background:rgba(232,72,60,.9);border-radius:999px;padding:4px 10px;margin-bottom:14px}
+.live i{width:7px;height:7px;border-radius:50%;background:#fff;animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin:26px 0 8px}
+.stats div{background:var(--bg2);padding:18px 14px}
+.stats b{display:block;font-family:var(--display);font-weight:900;font-size:clamp(1.7rem,6vw,2.4rem);line-height:1;font-variant-numeric:tabular-nums}
+.stats span{color:var(--muted);font-size:.88rem;font-family:var(--display)}
+.stats div:nth-child(1) b{color:var(--green)}.stats div:nth-child(2) b{color:var(--gold)}.stats div:nth-child(3) b{color:var(--orange)}.stats div:nth-child(4) b{color:#6fb0ff}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+section{padding:56px 0}
+h2{font-family:var(--display);font-weight:900;font-size:clamp(1.9rem,7vw,3.2rem);line-height:1.02;margin:0 0 12px;text-wrap:balance}
+.lead{color:var(--muted);font-size:1.1rem;max-width:40rem;margin:0 0 22px}
+/* finder */
+.finder{background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+#map{height:min(58vh,440px);background:#070c12}
+.finder .ctl{padding:16px;display:grid;gap:10px}
+.row{display:flex;gap:8px}
+input[type=text],input[type=tel],input[type=email]{flex:1;min-width:0;width:100%;font:inherit;font-size:1rem;padding:14px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg2);color:var(--fg)}
+input:focus{outline:none;border-color:var(--green)}
+.row .btn{width:auto;padding:14px 18px;box-shadow:none}
+.result{display:none;padding:18px;border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(63,209,127,.08),transparent)}
+.result.on{display:block;animation:rise .4s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.result .big{font-family:var(--display);font-weight:900;font-size:3.2rem;line-height:1;color:var(--green);font-variant-numeric:tabular-nums}
+.result p{margin:8px 0 14px}
+.note{color:var(--muted);font-size:.82rem;padding:0 16px 14px;margin:0}
+/* story */
+.timeline{position:relative;margin:10px 0 0;padding-left:26px}
+.timeline:before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;border-radius:3px;background:linear-gradient(180deg,#e8483c,#f08a24,#f6c445,#3fd17f,#2f7fe0)}
+.step{position:relative;margin:0 0 26px}
+.step:before{content:"";position:absolute;left:-24px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--bg);border:3px solid var(--gold)}
+.step .y{font-family:var(--display);font-weight:900;color:var(--gold);letter-spacing:.06em;font-size:.85rem}
+.step h3{font-family:var(--display);font-weight:900;font-size:1.35rem;margin:2px 0 4px}
+.step p{margin:0;color:#cfd8e1}
+/* how */
+.cards{display:grid;gap:12px}
+@media(min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;position:relative;overflow:hidden}
+.card .n{font-family:var(--display);font-weight:900;font-size:2.6rem;line-height:1;opacity:.9}
+.card h3{font-family:var(--display);font-weight:900;font-size:1.3rem;margin:8px 0 6px}
+.card p{margin:0;color:var(--muted)}
+.card:nth-child(1) .n{color:var(--green)}.card:nth-child(2) .n{color:var(--gold)}.card:nth-child(3) .n{color:#6fb0ff}
+.creed{display:grid;gap:10px;margin-top:14px}
+.creed div{border-left:4px solid var(--green);padding:6px 0 6px 14px}
+.creed b{font-family:var(--display);font-weight:900;font-size:1.25rem;display:block}
+.creed span{color:var(--muted)}
+.creed div:nth-child(2){border-color:var(--gold)}.creed div:nth-child(3){border-color:var(--red)}
+/* video */
+.video{position:relative;padding-top:56.25%;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+/* quote */
+.big-quote{font-family:var(--display);font-weight:900;font-size:clamp(1.6rem,6vw,2.6rem);line-height:1.12;margin:0;text-wrap:balance}
+.big-quote small{display:block;font-size:1rem;color:var(--gold);margin-top:14px;letter-spacing:.06em}
+/* form */
+.joinbox{background:var(--panel);border:2px solid transparent;border-radius:24px;padding:22px;
+  background-image:linear-gradient(var(--panel),var(--panel)),var(--rainbow);background-origin:border-box;background-clip:padding-box,border-box}
+.steps{display:flex;gap:6px;margin:0 0 16px}
+.steps span{flex:1;height:6px;border-radius:9px;background:var(--line)}
+.steps span.on{background:var(--green)}
+.grid2{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.full{grid-column:1/-1}
+label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--muted);margin:0 0 4px}
+.tick{display:flex;gap:10px;align-items:flex-start;font-size:.95rem;color:#cfd8e1;margin:12px 0 14px}
+.tick input{width:22px;height:22px;margin-top:2px;accent-color:var(--green);flex:none}
+.err{color:#ff8a7a;font-family:var(--display);min-height:1.4em;margin:8px 0 0}
+.small{color:var(--muted);font-size:.9rem}
+#done{display:none}#done.on{display:block;animation:rise .4s ease-out}
+#done .code{font-family:var(--display);font-weight:900;font-size:2.4rem;letter-spacing:.16em;color:var(--gold);margin:6px 0 14px}
+@media(max-width:420px){.grid2{grid-template-columns:1fr}}
+/* close */
+.close{text-align:left}
+.close h2 span{display:block}
+.close h2 span:nth-child(2){color:var(--muted);font-size:.55em;line-height:1.3;font-weight:800}
+.foot{color:var(--muted);font-size:.85rem;padding:30px 0 110px;text-align:center}
+/* sticky mobile CTA */
+.dock{position:fixed;left:12px;right:12px;bottom:12px;z-index:1100;transform:translateY(140%);transition:transform .3s ease}
+.dock.on{transform:none}
+.dock .btn{box-shadow:0 12px 34px rgba(0,0,0,.55)}
+@media(min-width:900px){.dock{display:none}}
+/* leaflet */
+.leaflet-container{font-family:var(--display);background:#070c12}
+.leaflet-tooltip{background:#070c12;color:#fff;border:1px solid var(--green);font-weight:800}
+.leaflet-tooltip:before{display:none}
+.pulse{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.95}50%{opacity:.45}}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top"><img src="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png" alt=""><b>eblockwatch</b></div>
+<header class="bar"><div class="wrap">
+  <img src="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/eblockwatch-logo.png" alt=""><b>eblockwatch</b>
+  <span class="sp"></span><a class="mem" href="/home">Members</a><a class="pill" href="#join">Join free</a>
+</div><div class="rainbow"></div></header>
 
-  <h1>How many eblockwatch members live near you?</h1>
-  <div class="from">This is only part of my members. You might be on it already. Check it out and tell me.<br>I look after my members like family.<small>Andre Snyman</small></div>
-
-  <button class="btn green" id="here" type="button">📍 Show members near me</button>
-  <form class="row" id="f" autocomplete="off"><input id="q" placeholder="Or type your suburb" aria-label="Suburb or town"><button class="btn" type="submit">Show</button></form>
-
-  <div class="count" id="out" aria-live="polite"></div>
-  <div id="map" role="application" aria-label="Map of eblockwatch members, shown as 2 km squares"></div>
-  <p class="src">We show how many, never who or exactly where. Squares under 10 members are hidden.</p>
-
-  <div id="home" class="homebox">
-    <b>Are you at home now?</b>
-    <p>Make this your Safe Zone. Andre then knows where home is, and when you leave it, that is when we look after you.</p>
-    <a class="btn green" id="homeBtn" href="#">🏠 Yes — make this my Safe Zone</a>
-    <p class="src">Your Safe Zone stays between you and Andre. He takes personal responsibility for it.</p>
+<div class="hero">
+  <div id="bgmap" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="live"><i></i>LIVE MAP</span>
+    <p class="kick">Since 2001 · Andre Snyman</p>
+    <h1>When you can't panic, <em>we panic for you.</em></h1>
+    <p class="sub"><b><span id="heroN">95,598</span> South Africans have my number.</b> When something goes wrong, I don't sound an alarm. I call the right people, because I know them, and they know me.</p>
+    <div class="ctas">
+      <a class="btn" href="#finder">📍 See who's near you</a>
+      <a class="btn ghost" href="#join">Join free in 60 seconds</a>
+    </div>
+    <div class="stats reveal">
+      <div><b id="sMembers">95,598</b><span>members</span></div>
+      <div><b>2,300+</b><span>suburbs &amp; towns</span></div>
+      <div><b>25 yrs</b><span>since 2001</span></div>
+      <div><b>~200k</b><span>follow Andre on Facebook</span></div>
+    </div>
   </div>
-
-  <div id="next">
-    <a class="btn green" id="join" href="https://wa.me/13158200999?text=JOIN">Join them — free, on WhatsApp</a>
-    <a class="btn ghost" id="tell" href="https://wa.me/13158200999?text=JOIN">Tell Andre what you found</a>
-    <a class="btn ghost" href="https://ryfsny.github.io/eblockwatch-control-room/member.html">Already a member? Open your page</a>
-  </div>
-
-  <p class="foot">Send JOIN to +1 315 820 0999 on WhatsApp. Andre gets your number, you get his.<br><a href="./">More about eblockwatch</a></p>
 </div>
+
+<section id="finder"><div class="wrap">
+  <h2 class="reveal">Who's near you?</h2>
+  <p class="lead reveal">Every glowing dot is a neighbourhood where members live. Type your suburb. We show how many, never who or exactly where.</p>
+  <div class="finder reveal">
+    <div id="map" role="application" aria-label="Map of eblockwatch members"></div>
+    <div class="ctl">
+      <button class="btn" id="here" type="button">📍 How many live near me?</button>
+      <form class="row" id="f" autocomplete="off"><input type="text" id="q" placeholder="Or type your suburb" aria-label="Suburb or town"><button class="btn ghost" type="submit">Find</button></form>
+    </div>
+    <div class="result" id="res" aria-live="polite">
+      <div class="big" id="resN"></div>
+      <p id="resT"></p>
+      <a class="btn" href="#join" id="resGo">Add my home to the map</a>
+    </div>
+    <p class="note">Squares under 10 members are hidden.</p>
+  </div>
+</div></section>
+
+<section style="background:var(--bg2)"><div class="wrap">
+  <p class="kick reveal">The story</p>
+  <h2 class="reveal">From one SMS to a nation.</h2>
+  <div class="timeline">
+    <div class="step reveal"><div class="y">2001</div><h3>It starts with a message.</h3><p>A bulk SMS to neighbours: someone needs help. Dr Striegher's SMS project unlocked the idea. eblockwatch is born.</p></div>
+    <div class="step reveal"><div class="y">THE GROWTH</div><h3>Street by street.</h3><p>Community WhatsApp groups, local security teams, farmers' networks. Every member gets Andre's number, and Andre gets theirs.</p></div>
+    <div class="step reveal"><div class="y">TODAY</div><h3><span id="tlN">95,598</span> members. One line.</h3><p>One WhatsApp line to Andre, a home Safe Zone on the map, and the BackApp that watches over you between safe zones.</p></div>
+    <div class="step reveal"><div class="y">NEXT</div><h3>Your street.</h3><p>Each member makes the spine of eblockwatch stronger. The more of your neighbours I know, the faster the right people reach your door.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="kick reveal">How it works</p>
+  <h2 class="reveal">Three steps. Then live your life.</h2>
+  <div class="cards">
+    <div class="card reveal"><div class="n">1</div><h3>Join free</h3><p>Your details here, then one tap on WhatsApp to prove the number is yours. Nobody can sign you up but you.</p></div>
+    <div class="card reveal"><div class="n">2</div><h3>Pin your home</h3><p>Your home becomes your Safe Zone. It stays between you and Andre.</p></div>
+    <div class="card reveal"><div class="n">3</div><h3>We watch the gaps</h3><p>Between safe zones is where things go wrong. That's where we look after you, and where Andre calls the right people near you.</p></div>
+  </div>
+  <div class="creed">
+    <div class="reveal"><b>I ask for you.</b><span>You never have to ask for help.</span></div>
+    <div class="reveal"><b>I know them. They know me.</b><span>25 years of real relationships, not an app full of strangers.</span></div>
+    <div class="reveal"><b>I don't cry wolf.</b><span>No panic, no noise. When I call, people come.</span></div>
+  </div>
+</div></section>
+
+<section style="background:var(--bg2)"><div class="wrap">
+  <p class="kick reveal">From Andre</p>
+  <h2 class="reveal">I'm not afraid of talking to power.</h2>
+  <p class="lead reveal">I don't like bullies, and I stand up to abuse. Every member empowers me to take on the roughest criminals.</p>
+  <div class="video reveal"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/RbpNi7g1re8" title="Andre Snyman eblockwatch" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+</div></section>
+
+<section id="join"><div class="wrap">
+  <div class="joinbox reveal">
+    <div class="steps"><span class="on"></span><span id="s2"></span></div>
+    <div id="formbox">
+      <p class="kick">Free · 60 seconds</p>
+      <h2 style="font-size:clamp(1.8rem,6.5vw,2.6rem)">Put your home on the map.</h2>
+      <p class="small" style="margin:0 0 16px">Your details, then one tap on WhatsApp. That's it.</p>
+      <form id="reg" novalidate>
+        <div class="grid2">
+          <div><label class="lbl" for="fn">First name</label><input type="text" id="fn" autocomplete="given-name"></div>
+          <div><label class="lbl" for="sn">Surname</label><input type="text" id="sn" autocomplete="family-name"></div>
+          <div class="full"><label class="lbl" for="ph">Cellphone (your WhatsApp number)</label><input type="tel" id="ph" autocomplete="tel" placeholder="082 123 4567"></div>
+          <div class="full"><label class="lbl" for="em">Email</label><input type="email" id="em" autocomplete="email"></div>
+          <div class="full"><label class="lbl" for="sb">Suburb</label><input type="text" id="sb" autocomplete="address-level2"></div>
+        </div>
+        <label class="tick"><input type="checkbox" id="ok"> We will use your details to link you to CyberChaperone.</label>
+        <button class="btn" type="submit" id="go">Next: confirm on WhatsApp →</button>
+        <p class="err" id="err" aria-live="polite"></p>
+      </form>
+    </div>
+    <div id="done" aria-live="polite">
+      <h2 id="doneH" style="font-size:clamp(1.8rem,6.5vw,2.6rem)">Last step.</h2>
+      <p class="small" id="doneP">Tap below. WhatsApp opens with your code already typed. Press send.</p>
+      <div class="code" id="code"></div>
+      <a class="btn wa" id="waGo" href="#">✅ Confirm on WhatsApp</a>
+      <p class="small" style="margin-top:12px">Your registration is then processed. It takes 24 hours.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="close" style="background:var(--bg2)"><div class="wrap">
+  <h2 class="reveal"><span>We have enough friends.</span><span>Enough to keep you safe. Enough to level the field at a roadblock. Enough to make bad actors think twice. Enough to bring people when muscle is needed.</span></h2>
+  <blockquote class="big-quote reveal" style="margin-top:26px">"Every member makes the spine of eblockwatch stronger."<small>— ANDRE SNYMAN</small></blockquote>
+  <div class="ctas" style="margin-top:24px">
+    <a class="btn" href="#join">Join free</a>
+    <a class="btn ghost" href="https://www.facebook.com/eblockwatchnational" rel="noopener">Follow Andre on Facebook</a>
+  </div>
+</div></section>
+
+<p class="foot wrap">eblockwatch · since 2001 · <a href="/home">Members: open your home page</a> · <a href="/">About</a></p>
+<div class="dock" id="dock"><a class="btn" href="#join">Join free: put your home on the map</a></div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
-  const API="https://dymtsrhhjwtwbkzpdwhz.supabase.co/rest/v1/rpc/public_area", KEY="sb_publishable_5EPYvLIERZ4ZzQ1-R3WU6Q_NDIz_egj";
-  const WA="https://wa.me/13158200999?text=";
-  const out=document.getElementById("out"), next=document.getElementById("next"), R=5;
-  let map=null, layer=null;
+  var BASE="https://dymtsrhhjwtwbkzpdwhz.supabase.co/rest/v1/rpc/", KEY="sb_publishable_5EPYvLIERZ4ZzQ1-R3WU6Q_NDIz_egj", WA_NUM="13158200999";
+  function rpc(fn,body){return fetch(BASE+fn,{method:"POST",headers:{"content-type":"application/json",apikey:KEY,authorization:"Bearer "+KEY},body:JSON.stringify(body||{})}).then(function(r){return r.json();});}
+  function fmt(n){return Number(n).toLocaleString("en-ZA").replace(/ /g," ");}
+  function countUp(el,to,ms,suf){if(!el)return;var t0=null;function s(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/ms),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(to*e))+(suf||"");if(p<1)requestAnimationFrame(s);}requestAnimationFrame(s);}
+  var TILE="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}";
+  var REF="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}";
+  function col(f){return f>.66?"#f6c445":f>.33?"#7be38f":"#3fd17f";}
+  var bg=null, map=null, heatL=null, nearL=null;
   if(window.L){
-    map=L.map("map",{scrollWheelZoom:false}).setView([-28.6,25.5],5);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:16,attribution:"© OpenStreetMap"}).addTo(map);
-    layer=L.layerGroup().addTo(map);
-    map.on("click",e=>show(e.latlng.lat,e.latlng.lng,""));
+    bg=L.map("bgmap",{zoomControl:false,attributionControl:false,dragging:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false,touchZoom:false}).setView(window.innerWidth<700?[-36.8,26.2]:[-30.5,22],window.innerWidth<700?5:6);
+    L.tileLayer(TILE,{maxZoom:12}).addTo(bg);
+    map=L.map("map",{scrollWheelZoom:false,zoomControl:false}).setView([-28.8,25.2],5);
+    L.control.zoom({position:"bottomright"}).addTo(map);
+    L.tileLayer(TILE,{maxZoom:16,attribution:"Tiles © Esri"}).addTo(map);
+    L.tileLayer(REF,{maxZoom:16,opacity:.8}).addTo(map);
+    heatL=L.layerGroup().addTo(map); nearL=L.layerGroup().addTo(map);
+    map.on("click",function(e){show(e.latlng.lat,e.latlng.lng,"");});
   }
-  async function show(lat,lng,place,gps){
-    out.textContent="Counting…";
-    if(layer){ layer.clearLayers(); const c=L.circle([lat,lng],{radius:R*1000,color:"#1f7a4a",weight:2,fill:false}).addTo(layer); map.fitBounds(c.getBounds(),{padding:[12,12]}); }
-    let d=null; try{ const r=await fetch(API,{method:"POST",headers:{"content-type":"application/json",apikey:KEY,authorization:"Bearer "+KEY},body:JSON.stringify({p_lat:lat,p_lng:lng,p_radius_km:R})}); d=await r.json(); }catch(e){}
-    if(!d||!d.ok){ out.textContent=d&&d.error==="busy"?"Lots of people are looking right now. Try again in a minute.":"That did not work. Try again."; return; }
-    const where=place?" of "+place:" of you";
-    let said;
-    if(d.n){ out.innerHTML=`<b>${Number(d.n).toLocaleString("en-ZA")}</b>eblockwatch members within ${d.radius_km} km${where}`; said=`${Number(d.n).toLocaleString("en-ZA")} members within ${d.radius_km} km${place?" of "+place:""}`; }
-    else { out.textContent=`Fewer than ${d.floor} members within ${d.radius_km} km${where}. Be one of the first.`; said=`fewer than ${d.floor} members near ${place||"me"}`; }
-    if(layer){ const max=Math.max(10,...d.cells.map(c=>c.n)), h=0.01;
-      d.cells.forEach(c=>L.rectangle([[c.lat-h,c.lng-h],[c.lat+h,c.lng+h]],{stroke:false,fillColor:"#1f7a4a",fillOpacity:.15+.6*Math.sqrt(c.n/max)}).bindTooltip(c.n+" members").addTo(layer)); }
-    document.getElementById("tell").href=WA+encodeURIComponent(`JOIN — I checked: ${said}.`);
-    next.classList.add("on");
-    const hb=document.getElementById("home");
-    if(gps){ document.getElementById("homeBtn").href=WA+encodeURIComponent(`JOIN — make this my home Safe Zone: ${lat.toFixed(5)},${lng.toFixed(5)}`); hb.classList.add("on"); }
-    else hb.classList.remove("on");
+  rpc("public_heat").then(function(d){
+    if(!d||!d.ok)return;
+    if(!window.L)return;
+    var cells=d.cells.filter(function(c){return !(Math.abs(c.lat+28.825)<.01&&Math.abs(c.lng-24.975)<.01);}).sort(function(a,b){return a.n-b.n;});
+    var max=Math.max.apply(null,cells.map(function(c){return c.n;}));
+    cells.forEach(function(c,i){setTimeout(function(){
+      var f=Math.sqrt(c.n/max);
+      L.circleMarker([c.lat,c.lng],{radius:3+16*f,stroke:false,fillColor:col(f),fillOpacity:.25+.6*f,className:f>.45?"pulse":""}).addTo(bg);
+      L.circleMarker([c.lat,c.lng],{radius:4+18*f,stroke:false,fillColor:col(f),fillOpacity:.25+.55*f,className:f>.5?"pulse":""}).bindTooltip((c.n>=100?fmt(c.n)+"+":c.n)+" members").addTo(heatL);
+    },300+i*7);});
+  }).catch(function(){});
+  ["heroN","sMembers","tlN"].forEach(function(id){countUp(document.getElementById(id),95598,1800);});
+
+  var res=document.getElementById("res"),resN=document.getElementById("resN"),resT=document.getElementById("resT");
+  function say(n,t){res.classList.add("on");resN.textContent=n;resT.textContent=t;}
+  function show(lat,lng,place){
+    say("…","Counting your neighbours…");
+    if(nearL&&map){nearL.clearLayers();var c=L.circle([lat,lng],{radius:5000,color:"#f6c445",weight:2,fillOpacity:.06}).addTo(nearL);map.flyToBounds(c.getBounds(),{padding:[16,16],duration:1.2});}
+    rpc("public_area",{p_lat:lat,p_lng:lng,p_radius_km:5}).then(function(d){
+      if(!d||!d.ok){say("—",d&&d.error==="busy"?"Lots of people are looking right now. Try again in a minute.":"That did not work. Try again.");return;}
+      var where=place?" of "+place:" of you";
+      if(d.n){resN.textContent="0";countUp(resN,d.n,900);resT.textContent="members live within 5 km"+where+". Your neighbours are already in. Add your home and they're one call away.";document.getElementById("resGo").textContent="Add my home to the map";}
+      else{say("Be the first","Fewer than 20 members within 5 km"+where+". Start the spine in your area.");document.getElementById("resGo").textContent="Put my area on the map";}
+      if(place)document.getElementById("sb").value=place;
+      if(nearL&&d.cells){var mx=Math.max.apply(null,[10].concat(d.cells.map(function(c){return c.n;}))),h=.01;
+        d.cells.forEach(function(c){L.rectangle([[c.lat-h,c.lng-h],[c.lat+h,c.lng+h]],{stroke:false,fillColor:"#3fd17f",fillOpacity:.2+.6*Math.sqrt(c.n/mx)}).bindTooltip(c.n+" members").addTo(nearL);});}
+    }).catch(function(){say("—","That did not work. Try again.");});
   }
-  document.getElementById("here").addEventListener("click",()=>{
-    if(!navigator.geolocation){ out.textContent="Your phone did not share a location. Type your suburb instead."; return; }
-    out.textContent="Finding you…";
-    navigator.geolocation.getCurrentPosition(p=>show(p.coords.latitude,p.coords.longitude,"",true),
-      ()=>{ out.textContent="Location is off. Type your suburb instead."; document.getElementById("q").focus(); },
-      {enableHighAccuracy:false,timeout:10000,maximumAge:600000});
+  document.getElementById("here").addEventListener("click",function(){
+    if(!navigator.geolocation){say("—","Your phone did not share a location. Type your suburb instead.");return;}
+    say("…","Finding you…");
+    navigator.geolocation.getCurrentPosition(function(p){show(p.coords.latitude,p.coords.longitude,"");},function(){say("—","Location is off. Type your suburb instead.");document.getElementById("q").focus();},{enableHighAccuracy:false,timeout:10000,maximumAge:600000});
   });
-  document.getElementById("f").addEventListener("submit",async ev=>{
-    ev.preventDefault(); const q=document.getElementById("q").value.trim(); if(!q) return;
-    out.textContent="Finding "+q+"…";
-    try{ const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=za&q="+encodeURIComponent(q)); const j=await r.json();
-      if(!j.length){ out.textContent="We could not find "+q+". Tap the map instead."; return; }
+  document.getElementById("f").addEventListener("submit",function(ev){
+    ev.preventDefault();var q=document.getElementById("q").value.trim();if(!q)return;
+    say("…","Finding "+q+"…");
+    fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=za&q="+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(j){
+      if(!j.length){say("—","We could not find "+q+". Tap the map instead.");return;}
       show(parseFloat(j[0].lat),parseFloat(j[0].lon),q);
-    }catch(e){ out.textContent="Search is not working right now. Tap the map instead."; }
+    }).catch(function(){say("—","Search is not working right now. Tap the map instead.");});
   });
+
+  var err=document.getElementById("err"),go=document.getElementById("go");
+  document.getElementById("reg").addEventListener("submit",function(ev){
+    ev.preventDefault();err.textContent="";go.disabled=true;go.textContent="One moment…";
+    rpc("web_register",{p_first:fn.value,p_surname:sn.value,p_phone:ph.value,p_email:em.value,p_suburb:sb.value,p_consent:document.getElementById("ok").checked}).then(function(d){
+      go.disabled=false;go.textContent="Next: confirm on WhatsApp →";
+      if(!d||!d.ok){err.textContent=(d&&d.error)||"That did not work. Try again.";return;}
+      document.getElementById("formbox").style.display="none";document.getElementById("s2").classList.add("on");
+      var done=document.getElementById("done");done.classList.add("on");
+      if(d.existing){document.getElementById("doneH").textContent="You're already a member, "+d.first+".";document.getElementById("doneP").textContent="This number is already on my list.";document.getElementById("code").textContent="";var b=document.getElementById("waGo");b.textContent="🏠 Open my home page";b.className="btn";b.href="/home";return;}
+      document.getElementById("doneH").textContent="Last step, "+d.first+".";
+      document.getElementById("code").textContent="JOIN "+d.code;
+      document.getElementById("waGo").href="https://wa.me/"+WA_NUM+"?text="+encodeURIComponent("JOIN "+d.code);
+      done.scrollIntoView({behavior:"smooth",block:"center"});
+    }).catch(function(){go.disabled=false;go.textContent="Next: confirm on WhatsApp →";err.textContent="That did not work. Check your internet and try again.";});
+  });
+
+  var io=("IntersectionObserver" in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:.12}):null;
+  document.querySelectorAll(".reveal").forEach(function(el){io?io.observe(el):el.classList.add("in");});
+  var dock=document.getElementById("dock"),joinEl=document.getElementById("join");
+  function dockUp(){var y=window.scrollY,jr=joinEl.getBoundingClientRect();dock.classList.toggle("on",y>window.innerHeight*.9&&!(jr.top<window.innerHeight&&jr.bottom>0));}
+  window.addEventListener("scroll",dockUp,{passive:true});
 })();
 </script>
 </body>
