@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eblockwatch on WhatsApp</title>
+<meta property="og:title" content="eblockwatch on WhatsApp">
+<meta property="og:description" content="Andre Snyman's eblockwatch. Tap, press send, you're connected.">
+<meta property="og:image" content="https://dymtsrhhjwtwbkzpdwhz.supabase.co/storage/v1/object/public/cards/brand/andre-founder-square-640.jpg">
+<meta property="og:url" content="https://www.eblockwatch.co.za/whatsapp">
+<!-- 13 Oct 2026 (Andre): one clean address that opens the eblockwatch WhatsApp line. join-wa picks the live line and logs the tap. -->
+<script>
+(function(){
+  var s = new URLSearchParams(location.search).get("src") || "site-whatsapp";
+  location.replace("https://dymtsrhhjwtwbkzpdwhz.supabase.co/functions/v1/join-wa?src=" + encodeURIComponent(s));
+})();
+</script>
+</head>
+<body style="font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding:24px">
+<p>Opening eblockwatch on WhatsApp… <a href="https://dymtsrhhjwtwbkzpdwhz.supabase.co/functions/v1/join-wa?src=site-whatsapp">Tap here if nothing happens</a>.</p>
+</body>
+</html>
