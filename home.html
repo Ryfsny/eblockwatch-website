@@ -1,1 +1,23 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>eblockwatch</title><meta http-equiv="refresh" content="0;url=https://ryfsny.github.io/eblockwatch-control-room/member.html"><link rel="canonical" href="https://ryfsny.github.io/eblockwatch-control-room/member.html"><script>location.replace("https://ryfsny.github.io/eblockwatch-control-room/member.html")</script></head><body><p><a href="https://ryfsny.github.io/eblockwatch-control-room/member.html">Continue</a></p></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>eblockwatch — My home</title>
+<!-- eblockwatch member home page LOADER — www.eblockwatch.co.za/home, 13 Oct 2026 (Andre: one eblockwatch address; was a jump to ryfsny.github.io). Copied from the 30 Sep loader. The real page lives in Supabase (site_pages 'member-home'). -->
+</head>
+<body style="margin:0;background:#0f1b2d;color:#9fb0c6;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;padding:24px">
+<p id="w">Opening eblockwatch…</p>
+<script>
+fetch("https://dymtsrhhjwtwbkzpdwhz.supabase.co/rest/v1/rpc/get_member_page", {
+  method: "POST", cache: "no-store", body: "{}",
+  headers: { "content-type": "application/json", apikey: "sb_publishable_5EPYvLIERZ4ZzQ1-R3WU6Q_NDIz_egj" }
+}).then(function (r) { return r.json(); }).then(function (h) {
+  if (typeof h !== "string" || !h) throw new Error("empty");
+  document.open(); document.write(h); document.close();
+}).catch(function () {
+  document.getElementById("w").textContent = "eblockwatch could not open. Check your internet, then try again.";
+});
+</script>
+</body>
+</html>
