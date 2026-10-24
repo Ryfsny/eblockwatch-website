@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@600;800;900&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
-/* 11 Oct 2026 (macgiver) — Andre: "Be a peacock." Real facts only. Consent from the member's own phone (JOIN <code>). */
+/* 11 Oct 2026 (macgiver) — Andre: "Be a peacock." Real facts only. Consent from the member's own phone (24 Oct: plain message, phone number is the proof, 067 line). */
 :root{--bg:#070c12;--bg2:#0c141d;--panel:#111b26;--line:#22344a;--fg:#f2f4f6;--muted:#a3b2c2;
   --green:#3fd17f;--gold:#f6c445;--red:#e8483c;--blue:#2f7fe0;--orange:#f08a24;
   --rainbow:linear-gradient(90deg,#e8483c,#f08a24,#f6c445,#3fd17f,#2f7fe0);
@@ -117,7 +117,7 @@ label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--
 .err{color:#ff8a7a;font-family:var(--display);min-height:1.4em;margin:8px 0 0}
 .small{color:var(--muted);font-size:.9rem}
 #done{display:none}#done.on{display:block;animation:rise .4s ease-out}
-#done .code{font-family:var(--display);font-weight:900;font-size:2.4rem;letter-spacing:.16em;color:var(--gold);margin:6px 0 14px}
+#done .code{font-size:1rem;line-height:1.5;white-space:pre-line;text-align:left;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:10px;padding:12px 14px;margin:6px 0 14px}
 @media(max-width:420px){.grid2{grid-template-columns:1fr}}
 /* close */
 .close{text-align:left}
@@ -232,17 +232,17 @@ label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--
           <div class="full"><label class="lbl" for="em">Email</label><input type="email" id="em" autocomplete="email"></div>
           <div class="full"><label class="lbl" for="sb">Suburb</label><input type="text" id="sb" autocomplete="address-level2"></div>
         </div>
-        <label class="tick"><input type="checkbox" id="ok"> We will use your details to link you to CyberChaperone.</label>
+        <label class="tick"><input type="checkbox" id="ok"> We will use your details to link you to eblockwatch.</label>
         <button class="btn" type="submit" id="go">Next: confirm on WhatsApp →</button>
         <p class="err" id="err" aria-live="polite"></p>
       </form>
     </div>
     <div id="done" aria-live="polite">
       <h2 id="doneH" style="font-size:clamp(1.8rem,6.5vw,2.6rem)">Last step.</h2>
-      <p class="small" id="doneP">Tap below. WhatsApp opens with your code already typed. Press send.</p>
+      <p class="small" id="doneP">Tap below. WhatsApp opens with your message ready. Press send. That message comes from your own phone, so we know it is you.</p>
       <div class="code" id="code"></div>
       <a class="btn wa" id="waGo" href="#">✅ Confirm on WhatsApp</a>
-      <p class="small" style="margin-top:12px">Your registration is then processed. It takes 24 hours.</p>
+      <p class="small" style="margin-top:12px">The moment it arrives, eblockwatch answers you on WhatsApp.</p>
     </div>
   </div>
 </div></section>
@@ -262,7 +262,7 @@ label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
-  var BASE="https://dymtsrhhjwtwbkzpdwhz.supabase.co/rest/v1/rpc/", KEY="sb_publishable_5EPYvLIERZ4ZzQ1-R3WU6Q_NDIz_egj", WA_NUM="13158200999";
+  var BASE="https://dymtsrhhjwtwbkzpdwhz.supabase.co/rest/v1/rpc/", KEY="sb_publishable_5EPYvLIERZ4ZzQ1-R3WU6Q_NDIz_egj", WA_NUM="27673805529";
   function rpc(fn,body){return fetch(BASE+fn,{method:"POST",headers:{"content-type":"application/json",apikey:KEY,authorization:"Bearer "+KEY},body:JSON.stringify(body||{})}).then(function(r){return r.json();});}
   function fmt(n){return Number(n).toLocaleString("en-ZA").replace(/ /g," ");}
   function countUp(el,to,ms,suf){if(!el)return;var t0=null;function s(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/ms),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(to*e))+(suf||"");if(p<1)requestAnimationFrame(s);}requestAnimationFrame(s);}
@@ -332,8 +332,9 @@ label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--
       var done=document.getElementById("done");done.classList.add("on");
       if(d.existing){document.getElementById("doneH").textContent="You're already a member, "+d.first+".";document.getElementById("doneP").textContent="This number is already on my list.";document.getElementById("code").textContent="";var b=document.getElementById("waGo");b.textContent="🏠 Open my home page";b.className="btn";b.href="/home";return;}
       document.getElementById("doneH").textContent="Last step, "+d.first+".";
-      document.getElementById("code").textContent="JOIN "+d.code;
-      document.getElementById("waGo").href="https://wa.me/"+WA_NUM+"?text="+encodeURIComponent("JOIN "+d.code);
+      var msg="Done — I'm registered on the website.\nI'm "+fn.value.trim()+" "+sn.value.trim()+(sb.value.trim()?", "+sb.value.trim():"")+".\nCell "+ph.value.trim()+" · "+em.value.trim().toLowerCase();
+      document.getElementById("code").textContent=msg;
+      document.getElementById("waGo").href="https://wa.me/"+WA_NUM+"?text="+encodeURIComponent(msg);
       done.scrollIntoView({behavior:"smooth",block:"center"});
     }).catch(function(){go.disabled=false;go.textContent="Next: confirm on WhatsApp →";err.textContent="That did not work. Check your internet and try again.";});
   });
