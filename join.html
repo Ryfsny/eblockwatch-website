@@ -138,6 +138,16 @@ label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+  .label{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-family:var(--display)}
+  .tiers{margin-top:1.8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:16px}
+  .tier{background:var(--panel);border-radius:12px;padding:1.3rem;display:grid;gap:.6rem;align-content:start}
+  .tier.key{outline:3px solid var(--gold)}
+  .tier h3{font-size:1.3rem;font-weight:800;font-family:var(--display)}
+  .tier .price{font-family:var(--display);font-size:2rem;font-weight:900;line-height:1}
+  .tier .price small{font-size:.95rem;font-weight:600;color:var(--muted)}
+  .tier ul{margin:0;padding-left:1.1rem;color:var(--fg)}
+  .tier .btn{justify-self:start;width:auto;font-size:1rem;padding:.7rem 1.1rem}
 </style>
 </head>
 <body>
@@ -159,7 +169,7 @@ label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--
     </div>
     <div class="stats reveal">
       <div><b id="sMembers">95,598</b><span>members</span></div>
-      <div><b>2,300+</b><span>suburbs &amp; towns</span></div>
+      <div><b>2,300+</b><span>suburbs & towns</span></div>
       <div><b>25 yrs</b><span>since 2001</span></div>
       <div><b>~200k</b><span>follow Andre on Facebook</span></div>
     </div>
@@ -215,6 +225,17 @@ label.lbl{display:block;font-family:var(--display);font-size:.85rem;color:var(--
   <h2 class="reveal">I'm not afraid of talking to power.</h2>
   <p class="lead reveal">I don't like bullies, and I stand up to abuse. Every member empowers me to take on the roughest criminals.</p>
   <div class="video reveal"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/RbpNi7g1re8" title="Andre Snyman eblockwatch" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+</div></section>
+
+
+<section aria-labelledby="h-member"><div class="wrap">
+  <p class="label">Membership</p>
+  <h2 id="h-member" class="reveal">Start where you are. Take on more when you are ready.</h2>
+  <div class="tiers">
+      <div class="tier"><h3>Entry Level</h3><p class="price">Join in 60 seconds</p><ul><li>Andre has your number, you have his</li><li>Your Cyberdome and home pin</li><li>The BackApp</li></ul><a class="btn" href="#join">Start on WhatsApp</a></div>
+      <div class="tier key"><h3>Single Membership</h3><p class="price">R150</p><ul><li>Everything in Entry Level</li><li>Someone knows when you should arrive</li><li>More of Andre when something goes wrong</li><li>Cop on eblock stickers for your own vehicles</li></ul><a class="btn" href="https://wa.me/27673805529?text=Single%20Membership" target="_blank" rel="noopener">Start Single on WhatsApp</a></div>
+      <div class="tier"><h3>Family Membership</h3><p class="price">R250 <small>for a family of five</small></p><ul><li>Single Membership for five people you choose</li><li>Your family linked in one circle</li><li>One relationship, everyone covered</li></ul><a class="btn" href="https://wa.me/27673805529?text=Family%20Membership" target="_blank" rel="noopener">Ask about Family</a></div>
+    </div>
 </div></section>
 
 <section id="join"><div class="wrap">
